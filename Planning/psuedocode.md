@@ -1,0 +1,39 @@
+# Establish Connection With Alice
+GENERATE PRIVATE KEY
+GENERATE PUBLIC KEY
+
+OPEN PORT  XXX on [Bob's Machine]
+PING [Alice's IP]
+
+IF !PING {
+	OUTPUT "ALICE is offline"
+}ELSE {
+	HANDSHAKE alice
+	CREATE PACKET
+	INSERT KEY in CONTENTS
+	SEND PACKET	
+}
+
+
+RECIEVE ALICE PACKET
+STORE ALICE KEY
+
+# Send Message TO Alice
+INPUT message
+STORE message
+
+ENCRYPT message WITH KEY
+
+CREATE PACKET
+ADD message TO PACKET
+SEND PACKET
+
+# Recieve Message FROM Alice
+LISTEN on PORT XXX
+RECIEVE PACKET
+
+STORE KEY
+STORE message
+DECRYPT message
+
+OUTPUT message
