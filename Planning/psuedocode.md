@@ -1,9 +1,5 @@
 # Establish Connection With Alice
 
-GENERATE PRIVATE KEY
-
-GENERATE PUBLIC KEY
-
 OPEN PORT  XXX on [Bob's Machine]
 
 PING [Alice's IP]
@@ -18,7 +14,7 @@ IF !PING {
 
 	CREATE PACKET
 
-	INSERT KEY in CONTENTS
+	SIGN DATA
 
 	SEND PACKET	
 }
@@ -53,3 +49,17 @@ STORE message
 DECRYPT message
 
 OUTPUT message
+
+# Generate Private/Public Key Pair
+
+CREATE KeyPairGenerator WITH INSTANCE of "Algorithm" AND "Provider"
+
+GENERATE SecureRandom WITH INSTANCE of "Algorithm" AND "Provider"
+
+INITIALISE KeyPairGenerator WITH "Byte Size" AND "SecureRandom"
+
+CREATE KeyPair with KeyPairGenerator
+
+STORE PrivateKey FROM KeyPair
+
+STORE PublicKey FROM KeyPair
