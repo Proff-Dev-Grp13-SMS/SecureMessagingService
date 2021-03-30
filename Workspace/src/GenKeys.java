@@ -6,8 +6,8 @@ import java.security.*;
 public class GenKeys {
 	//Private Variables
 	private KeyPairGenerator keyGen;
-	private KeyPair kp;
-	private SecureRandom sr;
+	private static KeyPair kp;
+	private static SecureRandom sr;
 	
 	/**
 	 * This function is designed to return a secure, usable random number 
@@ -15,7 +15,7 @@ public class GenKeys {
 	 */
 	private SecureRandom generateSecureRandom() {
 		try {
-			sr.getInstance("SHA1PRNG", "SUN");
+			sr = SecureRandom.getInstance("SHA1PRNG", "SUN");//Generation of SecureRandom
 		} catch (NoSuchAlgorithmException | NoSuchProviderException e) {
 			e.printStackTrace();
 		}//End of try/catch
@@ -27,6 +27,7 @@ public class GenKeys {
 	 */
 	public void generateKeys() {
 		try {
+			generateSecureRandom();//Create the sr
 			keyGen = KeyPairGenerator.getInstance("AES");
 			keyGen.initialize(256, sr);;
 			kp = keyGen.generateKeyPair();
@@ -39,7 +40,7 @@ public class GenKeys {
 	 *  This function returns the private key from the key pair
 	 * @return PrivateKey: The private key of the key pair
 	 */
-	public PrivateKey getPrivKey() {
+	public static PrivateKey getPrivKey() {
 		return kp.getPrivate();
 	}//End of getPrivKey
 	
@@ -47,7 +48,7 @@ public class GenKeys {
 	 *  This function returns the public key from the key pair
 	 * @return PublicKey: The public key of the key pair
 	 */
-	public PublicKey getPubKey() {
+	public static PublicKey getPubKey() {
 		return kp.getPublic();
 	}
 }//End of GenKeys
