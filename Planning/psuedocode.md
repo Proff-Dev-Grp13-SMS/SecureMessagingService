@@ -1,54 +1,14 @@
 # Establish Connection With Alice
 
-OPEN PORT  XXX on [Bob's Machine]
-
-PING [Alice's IP]
-
-IF !PING {
-
-	OUTPUT "ALICE is offline"
-
-}ELSE {
-
-	HANDSHAKE alice
-
-	CREATE PACKET
-
-	SIGN DATA
-
-	SEND PACKET	
-}
-
-
-RECIEVE ALICE PACKET
-
-STORE ALICE KEY
+TO BE REWROTE
 
 # Send Message TO Alice
-INPUT message
 
-STORE message
-
-ENCRYPT message WITH KEY
-
-CREATE PACKET
-
-ADD message TO PACKET
-
-SEND PACKET
+TO BE REWROTE
 
 # Recieve Message FROM Alice
-LISTEN on PORT XXX
 
-RECIEVE PACKET
-
-STORE KEY
-
-STORE message
-
-DECRYPT message
-
-OUTPUT message
+TO BE REWROTE
 
 # Generate Private/Public Key Pair
 
@@ -60,6 +20,14 @@ INITIALISE KeyPairGenerator WITH "Byte Size" AND "SecureRandom"
 
 CREATE KeyPair with KeyPairGenerator
 
-STORE PrivateKey FROM KeyPair
+STORE KeyPair
 
-STORE PublicKey FROM KeyPair
+# Contacts List 
+
+READ KeyDirectory
+
+SEND 'PING' to IP Range
+
+RECIEVE application KEY
+
+IF KEY MATCH KeyDirectory[i] THEN ASSIGN IP to Contact KeyDirectory[i]
