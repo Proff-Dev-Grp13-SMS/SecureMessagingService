@@ -1,12 +1,28 @@
-# Establish Connection With Alice
+# LISTENER
 
-TO BE REWROTE
+CREATE InputStream
 
-# Send Message TO Alice
+CREATE DataInputStream
 
-TO BE REWROTE
+CREATE Socket
 
-# Recieve Message FROM Alice
+PUBLIC CONSTRUCT LISTENER (SOCKET connectionIn)
+{
+	STORE connectionIn
+	
+	InputStream = connectionIn.getInputStream
+	
+	DataInputStream = NEW object(InputStream)
+}
+
+PROTECTED Call
+{
+
+	DataInputStream.readUTF = msg
+	STORE msg
+}
+
+# Send Message
 
 TO BE REWROTE
 
