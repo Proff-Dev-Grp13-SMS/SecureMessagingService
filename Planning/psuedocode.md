@@ -1,60 +1,65 @@
-# Establish Connection With Alice
+# LISTENER
 
-OPEN PORT  XXX on [Bob's Machine]
+CREATE InputStream
 
-PING [Alice's IP]
+CREATE DataInputStream
 
-IF !PING {
+CREATE Socket
 
-	OUTPUT "ALICE is offline"
-
-}ELSE {
-
-	HANDSHAKE alice
-
-	CREATE PACKET
-
-	SIGN DATA
-
-	SEND PACKET	
+PUBLIC CONSTRUCT LISTENER (SOCKET connectionIn)
+{
+	
+	STORE connectionIn
+	
+	InputStream = connectionIn.getInputStream
+	
+	DataInputStream = NEW object(InputStream)
 }
 
+PROTECTED Call
+{
 
-RECIEVE ALICE PACKET
+	DataInputStream.readUTF = msg
+	STORE msg
+}
 
-STORE ALICE KEY
+# ChatClient
 
-# Send Message TO Alice
-INPUT message
+CREATE OutputStream
 
-STORE message
+CREATE DataOutputStream
 
-ENCRYPT message WITH KEY
+CREATE LISTENER
 
-CREATE PACKET
+CREATE INTEGER PortNumber
 
-ADD message TO PACKET
+CREATE STRING MachineIP
 
-SEND PACKET
+CREATE STRING Name
 
-<<<<<<< Updated upstream
-# Recieve Message FROM Alice
-LISTEN on PORT XXX
-
-RECIEVE PACKET
-=======
 PUBLIC VOID Start{
 
 	RUN getInfo
->>>>>>> Stashed changes
 
-STORE KEY
+	ON KEY 'Enter' RELEASE{
+	
+		DataOutputStream.write
+		
+	}
+	
+	PRIVATE startClientThread{
+	
+	CREATE Socket connection 
 
-STORE message
-
-DECRYPT message
-
-OUTPUT message
+	connection = new SOCKET (MachineIP, PortNumber)
+	
+	OutputStream = connection.getOutputStream
+	
+	DataOutputStream = new DataOutputStream (OutputStream)
+	
+	CREATE NEW Thread(LISTENER)
+	
+	START Thread
 
 PUBLIC VOID getInfo{
 	
@@ -94,10 +99,14 @@ INITIALISE KeyPairGenerator WITH "Byte Size" AND "SecureRandom"
 
 CREATE KeyPair with KeyPairGenerator
 
-STORE PrivateKey FROM KeyPair
+STORE KeyPair
 
-<<<<<<< Updated upstream
-STORE PublicKey FROM KeyPair
-=======
+# Contacts List 
+
+READ KeyDirectory
+
+SEND 'PING' to IP Range
+
+RECIEVE application KEY
+
 IF KEY MATCH KeyDirectory[i] THEN ASSIGN IP to Contact "KeyDirectory[i]"
->>>>>>> Stashed changes
