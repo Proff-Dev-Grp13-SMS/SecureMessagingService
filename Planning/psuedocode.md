@@ -37,10 +37,16 @@ ADD message TO PACKET
 
 SEND PACKET
 
+<<<<<<< Updated upstream
 # Recieve Message FROM Alice
 LISTEN on PORT XXX
 
 RECIEVE PACKET
+=======
+PUBLIC VOID Start{
+
+	RUN getInfo
+>>>>>>> Stashed changes
 
 STORE KEY
 
@@ -49,6 +55,34 @@ STORE message
 DECRYPT message
 
 OUTPUT message
+
+PUBLIC VOID getInfo{
+	
+	DISPLAY "Enter Remote Host"
+	
+	INPUT MachineIP
+	
+	DISPLAY "Enter PortNumber"
+	
+	INPUT PortNumber
+	
+	DISPLAY "Enter UsrName"
+	
+	INPUT Name
+	
+}
+
+PUBLIC VOID Stop{
+
+	SYSTEM EXIT
+	
+}
+
+PUBLIC VOID Main{
+
+	LAUNCH ARGUMENTS
+	
+}
 
 # Generate Private/Public Key Pair
 
@@ -62,4 +96,8 @@ CREATE KeyPair with KeyPairGenerator
 
 STORE PrivateKey FROM KeyPair
 
+<<<<<<< Updated upstream
 STORE PublicKey FROM KeyPair
+=======
+IF KEY MATCH KeyDirectory[i] THEN ASSIGN IP to Contact "KeyDirectory[i]"
+>>>>>>> Stashed changes
