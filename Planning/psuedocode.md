@@ -37,17 +37,21 @@ CREATE STRING MachineIP
 
 CREATE STRING Name
 
-PUBLIC Start{
+PUBLIC VOID Start{
 
-	RUN getINFO
+	RUN getInfo
 
 	ON KEY 'Enter' RELEASE{
-	
-		DataOutputStream.write
+		
+		INPUT text
+		
+		DataOutputStream.write text
 		
 	}
+
+}
 	
-	PRIVATE startClientThread{
+PRIVATE startClientThread{
 	
 	CREATE Socket connection 
 
@@ -60,6 +64,90 @@ PUBLIC Start{
 	CREATE NEW Thread(LISTENER)
 	
 	START Thread
+
+}
+
+PUBLIC VOID getInfo{
+	
+	DISPLAY "Enter Remote Host"
+	
+	INPUT MachineIP
+	
+	DISPLAY "Enter PortNumber"
+	
+	INPUT PortNumber
+	
+	DISPLAY "Enter UsrName"
+	
+	INPUT Name
+	
+}
+
+PUBLIC VOID Stop{
+
+	SYSTEM EXIT
+	
+}
+
+PUBLIC VOID Main{
+
+	LAUNCH ARGUMENTS
+	
+}
+
+# ServerClient
+
+CREATE OutputStream
+
+CREATE DataOutputStream
+
+CREATE LISTENER
+
+CREATE FINAL INTEGER PortNumber = XXXX
+
+CREATE STRING Name
+
+PUBLIC VOID Start{
+
+	RUN getInfo
+	
+	RUN StartServerThread
+
+	ON KEY 'Enter' RELEASE{
+		
+		INPUT text
+		
+		DataOutputStream.write text
+		
+	}
+
+}
+
+PRIVATE startServerThread{
+	
+	CREATE Socket connection 
+	
+	CREATE ServerSocket listenSocket
+	
+	INIT listenSocket WITH PortNumber
+	
+	INIT connection WITH listenSocket.accept
+	
+	OutputStream = connection.getOutputStream
+	
+	DataOutputStream = new DataOutputStream (OutputStream)
+	
+	INIT LISTENER WITH Connection
+	
+	CREATE NEW Thread(LISTENER)
+	
+	START Thread
+
+}
+
+PRIVATE VOID getInfo{
+
+}
 
 # Generate Private/Public Key Pair
 
@@ -81,4 +169,4 @@ SEND 'PING' to IP Range
 
 RECIEVE application KEY
 
-IF KEY MATCH KeyDirectory[i] THEN ASSIGN IP to Contact KeyDirectory[i]
+IF KEY MATCH KeyDirectory[i] THEN ASSIGN IP to Contact "KeyDirectory[i]"
