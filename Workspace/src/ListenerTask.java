@@ -1,5 +1,3 @@
-package something.witty.secure_messaging_service;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;

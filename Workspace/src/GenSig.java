@@ -1,5 +1,3 @@
-package something.witty.secure_messaging_service;
-
 import java.security.*;
 public class GenSig {
 	private static Signature sigName;
