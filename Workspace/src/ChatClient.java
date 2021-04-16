@@ -83,8 +83,8 @@ public class ChatClient extends Application
             connection = new Socket (remoteMachine, port); 
            
      	    // create output stream to the connection   
-	    outStream = connection.getOutputStream();
-	    outDataStream = new DataOutputStream (outStream);      	
+            outStream = connection.getOutputStream();
+            outDataStream = new DataOutputStream (outStream);      	
          	
             // create a thread to listen for messages
             listener = new ListenerTask(textWindow, connection);

@@ -170,3 +170,5 @@ SEND 'PING' to IP Range
 RECIEVE application KEY
 
 IF KEY MATCH KeyDirectory[i] THEN ASSIGN IP to Contact "KeyDirectory[i]"
+
+# WhichClient
