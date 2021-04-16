@@ -29,7 +29,7 @@ public class GenKeys {
 		try {
 			generateSecureRandom();//Create the sr
 			keyGen = KeyPairGenerator.getInstance("AES");
-			keyGen.initialize(256, sr);;
+			keyGen.initialize(256, sr);
 			kp = keyGen.generateKeyPair();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
