@@ -15,14 +15,14 @@ import javafx.stage.Stage;
 
 public class ChatClient extends Application
 {
-    // declare and initialize the text display area
+    // declare and initialise the text display area
     private TextArea textWindow = new TextArea();
    
       
     private OutputStream outStream; // for low level output
     private DataOutputStream outDataStream; // for high level output
    
-    private ListenerTask listener; // required for the cleint thread
+    private ListenerTask listener; // required for the client thread
    
     private int port; // to hold the port number of the server
     private  String remoteMachine; // to hold the name chosen by the user
