@@ -1,3 +1,5 @@
+package something.witty.secure_messaging_service;
+
 /**
  * @author liam
  * This is the class responsible for generating the keys required for the user.

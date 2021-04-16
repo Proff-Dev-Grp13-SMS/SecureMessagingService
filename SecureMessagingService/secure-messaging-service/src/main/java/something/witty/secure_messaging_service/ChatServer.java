@@ -1,3 +1,4 @@
+package something.witty.secure_messaging_service;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -6,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Optional;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -13,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -36,29 +39,31 @@ public class ChatServer extends Application
         getInfo(); // call method that gets user name
         startServerThread();  // start the sever thread
         
-        TextField inputWindow = new TextField();
+        final TextField inputWindow = new TextField();
 
         // configure the behaviour of the input window
-        inputWindow.setOnKeyReleased(e -> 
-                    {  
-                        String text;
+        inputWindow.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {  
+			    String text;
 
-                        if(e.getCode().getName().equals("Enter"))  // if the <Enter> key was pressed
-                        {
-                            text = "<" + name + "> " +  inputWindow.getText() + "\n";
-                            textWindow.appendText(text); // echo the text
-                            inputWindow.setText(""); // clear the input window
+			    if(e.getCode().getName().equals("Enter"))  // if the <Enter> key was pressed
+			    {
+			        text = "<" + name + "> " +  inputWindow.getText() + "\n";
+			        textWindow.appendText(text); // echo the text
+			        inputWindow.setText(""); // clear the input window
 
-                            try
-                            {
-                                outDataStream.writeUTF(text); // transmit the text  
-                            }
+			        try
+			        {
+			            outDataStream.writeUTF(text); // transmit the text  
+			        }
 
-                            catch(IOException ie)
-                            {  
-                            }
-                        }
-                    }
+			        catch(IOException ie)
+			        {  
+			        }
+			    }
+			}
+		}
                                     );
 
         // configure the visual components
