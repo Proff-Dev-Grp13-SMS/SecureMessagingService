@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
@@ -34,8 +35,8 @@ public class LoginGUI implements ActionListener {		//public class that implement
 		JTextField SignUpText = new JTextField(20);
 		JButton button;				//one button
 		JButton button2;			//two button
-		button = new JButton("Login");		//New button "sign up", will need position moved
-	    button2 = new JButton("Sign Up"); 		//New button "sign up", will need position moved
+		button = new JButton("Sign Up");		//New button "sign up", will need position moved
+	        button2 = new JButton("Login"); 		//New button "sign up", will need position moved
 		button.addActionListener(this);		//action listener to allow us to assign a task once it has been 'clicked'	
 		button2.addActionListener(this);	// ^^^^^^^
 		
