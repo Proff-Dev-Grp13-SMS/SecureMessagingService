@@ -1,5 +1,5 @@
 import java.security.*;
-public class GenSig {
+public class GenSig extends GenKeys{
 	private static Signature sigName;
 	
 	private Signature generateSignature() throws NoSuchAlgorithmException {

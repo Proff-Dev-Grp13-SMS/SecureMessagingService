@@ -9,34 +9,42 @@ import java.security.KeyPair;
  * @author Liam Walton
  * This class is responsible for exporting the KeyPair to a file for offline storage.
  */
-public class ExportKeys {
+public class ExportKeys extends GenKeys {
 	
-	public void exportKeys(KeyPair kpIn) {
+	/**
+	 * Responsible for exporting the keys to offline storage. Uses Object Serialization. 
+	 * @param KeyPair kpIn: The KeyPair to be exported.
+	 */
+	public void exportKeys() {
 		try(
 				FileOutputStream keyFile = new FileOutputStream("Keys.dat");
 				ObjectOutputStream keyStream = new ObjectOutputStream(keyFile)
 			)//End of resources
 		{
-			keyStream.writeObject(kpIn);//Write out KeyPair Object
+			keyStream.writeObject(GenKeys.getKP());//Write out KeyPair Object
 		}//End of try
 		catch(IOException e) {
 			System.out.println("An IO Exception occured, unable to write file.");
 		}//End of catch
 	}//End of exportKeys
 	
+	/**
+	 * Imports previously exported KeyPair
+	 * @return KeyPair keysIn: The KeyPair being read in from file
+	 */
 	public KeyPair readKeys() {
-		KeyPair kp = null;
+		KeyPair keysIn = null;
 		try
 		(
 			FileInputStream keyFile = new FileInputStream("Keys.dat");
 			ObjectInputStream keyStream = new ObjectInputStream(keyFile);
 		)//End of Resources
 		{
-			kp = (KeyPair) keyStream.readObject();//Read in KeyPair object to kp
+			keysIn = (KeyPair) keyStream.readObject();//Read in KeyPair object to kp
 		}//End of try
 		catch(Exception e) {
 			e.printStackTrace();
 		}//End of catch
-		return kp;
+		return keysIn;
 	}//End of readKeys
 }//End of class

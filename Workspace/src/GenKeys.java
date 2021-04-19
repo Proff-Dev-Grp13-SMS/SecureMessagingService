@@ -6,8 +6,8 @@ import java.security.*;
 public class GenKeys {
 	//Private Variables
 	private KeyPairGenerator keyGen;
-	private static KeyPair kp;
 	private static SecureRandom sr;
+	protected static KeyPair kp;
 	
 	/**
 	 * This function is designed to return a secure, usable random number 
@@ -37,10 +37,18 @@ public class GenKeys {
 	}//End of generateKeys
 	
 	/**
+	 * Protected Class used for ExportKeys, to get kp.
+	 * @return KeyPair kp: The KeyPair of this class
+	 */
+	protected static KeyPair getKP() {
+		return kp;
+	}
+	
+	/**
 	 *  This function returns the private key from the key pair
 	 * @return PrivateKey: The private key of the key pair
 	 */
-	public static PrivateKey getPrivKey() {
+	protected static PrivateKey getPrivKey() {
 		return kp.getPrivate();
 	}//End of getPrivKey
 	
@@ -48,7 +56,7 @@ public class GenKeys {
 	 *  This function returns the public key from the key pair
 	 * @return PublicKey: The public key of the key pair
 	 */
-	public static PublicKey getPubKey() {
+	protected static PublicKey getPubKey() {
 		return kp.getPublic();
 	}
 }//End of GenKeys
