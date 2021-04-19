@@ -106,11 +106,7 @@ public class SignUp implements ActionListener {		//public class that implements 
 		if (e.getActionCommand()=="Back to Login") //if the button 'Login' is pressed
         {	
 			
-			
-		
-			
-			count++;					//ignore this part, it just adds a number to a count to test it works
-			label.setText("No of clicks:" + count);		//changes the label, again just to test it works. We can remove this :)
+			new LoginGUI();
 			
 			}
 			
