@@ -1,8 +1,11 @@
+import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.security.KeyPair;
 
 /**
@@ -42,9 +45,27 @@ public class ExportKeys extends GenKeys {
 		{
 			keysIn = (KeyPair) keyStream.readObject();//Read in KeyPair object to kp
 		}//End of try
-		catch(Exception e) {
-			e.printStackTrace();
+		
+		//Following Code Based off of Java in Two Semesters Ch.18 Fig 18.3
+		catch(EOFException e) {
+			System.out.println("End of File");
+		}
+		
+		catch(FileNotFoundException e) {
+			System.out.println("\nNo File Read");
 		}//End of catch
+		
+		catch(ClassNotFoundException e) {
+			System.out.println("\nCannot Read Object of Unknown Class");
+		}
+		
+		catch(StreamCorruptedException e) {
+			System.out.println("\nUnreadable Format for File");
+		}
+		
+		catch(IOException e) {
+			System.out.println("\nThere was an issue reading the file");
+		}
 		return keysIn;
 	}//End of readKeys
 }//End of class
