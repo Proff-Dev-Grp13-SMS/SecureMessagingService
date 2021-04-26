@@ -1,5 +1,7 @@
+package SMS;
+
 /**
- * @author liam
+ * @author Liam
  * This is the class responsible for generating the keys required for the user.
  */
 import java.security.*;
