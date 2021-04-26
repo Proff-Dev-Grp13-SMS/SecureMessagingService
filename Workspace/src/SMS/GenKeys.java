@@ -30,8 +30,8 @@ public class GenKeys {
 	public void generateKeys() {
 		try {
 			generateSecureRandom();//Create the sr
-			keyGen = KeyPairGenerator.getInstance("AES");
-			keyGen.initialize(256, sr);
+			keyGen = KeyPairGenerator.getInstance("RSA");
+			keyGen.initialize(2048, sr);
 			kp = keyGen.generateKeyPair();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
