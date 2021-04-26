@@ -1,7 +1,5 @@
 package SMS;
 
-import javax.crypto.SecretKey;
-
 /**
  * Crypto Class
  * @author Liam Walton
