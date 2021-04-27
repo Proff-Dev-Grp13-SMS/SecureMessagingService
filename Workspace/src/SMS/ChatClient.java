@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+
+import javax.xml.bind.DatatypeConverter;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,19 +18,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-/**
- * 
- * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
- *
- */
+
 public class ChatClient {
     private TextArea textWindow = new TextArea(); // declare and initialise the text display area
     private OutputStream outStream; // for low level output
     private DataOutputStream outDataStream; // for high level output
-    private ListenerTask listener; // required for the server thread
+    private ClientListenerTask listener; // required for the server thread
     private Socket connection; // Active connection to server
     private String name; //User's name
     private Stage stage;
+    private KeyPair keyPair;
+    private PublicKey pubKey;
 
     public ChatClient(Stage s, Socket c, String n) {
         connection = c;
@@ -37,7 +42,7 @@ public class ChatClient {
             outDataStream = new DataOutputStream (outStream);
 
             // create a thread to listen for messages
-            listener = new ListenerTask(textWindow, connection);
+            listener = new ClientListenerTask(textWindow, connection);
             Thread thread = new Thread(listener);
             thread.start(); // start the thread
         }
@@ -49,6 +54,7 @@ public class ChatClient {
         {
             textWindow.setText("An error has occured");
         }
+        exchangeKeys();
     }
 
     private void gui(){
@@ -65,11 +71,16 @@ public class ChatClient {
 
                         try
                         {
-                            outDataStream.writeUTF(text); // transmit the text
+                            //Encrypt Here1
+                        	
+                        	outDataStream.writeUTF(text); // transmit the text
                         }
                         catch(IOException ie)
                         {
-                        }
+                        } catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                     }
                 }
         );
@@ -85,4 +96,40 @@ public class ChatClient {
         stage.setTitle(name);
         stage.show();
     }
+
+    private void exchangeKeys(){
+
+        System.out.println("1");
+        try {
+            System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
+            outStream.write(keyPair.getPublic().getEncoded());
+            outStream.flush();
+        } catch (IOException e) {
+            System.out.println("I/O Error");
+            System.exit(0);
+        }
+        
+        try
+        {
+          	byte[] servPubKeyBytes = new byte[588];
+           	connection.getInputStream().read(servPubKeyBytes);
+            System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
+               
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            pubKey = kf.generatePublic(ks);
+            System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+        } catch (IOException e) {
+            System.out.println("Error obtaining server public key 1.");
+            System.exit(0);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error obtaining server public key 2.");
+            System.exit(0);
+        } catch (InvalidKeySpecException e) {
+            System.out.println("Error obtaining server public key 3.");
+            System.exit(0);
+        }   
+    }
 }
+
+
