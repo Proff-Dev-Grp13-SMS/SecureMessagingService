@@ -30,12 +30,14 @@ public class ChatClient {
     private Socket connection; // Active connection to server
     private String name; //User's name
     private Stage stage;
+    private KeyPair keyPair;
     private PublicKey pubKey;
 
-    public ChatClient(Stage s, Socket c, String n) {
+    public ChatClient(Stage s, Socket c, String n, KeyPair kp) {
         connection = c;
         name = n;
         stage = s;
+        keyPair = kp;
         gui();
         try
         {

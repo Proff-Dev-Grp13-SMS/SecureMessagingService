@@ -36,11 +36,14 @@ public class ChatServer {
     private Stage stage;
     private String name;
     private ServerListenerTask listener;
+    private KeyPair keyPair;
+    private PublicKey pubKey;
 
-    public ChatServer(String n, Stage s) {
+    public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
         stage = s;
         textWindow.appendText("Listening for connection" + "\n");
+        keyPair = kp;
 
         GUI();
         try
@@ -112,8 +115,7 @@ public class ChatServer {
         stage.show();
     }
 
-    private KeyPair kp;
-    private PublicKey pubKey;
+
     
     private void exchangeKeys(){
         while(pubKey.equals(null))
@@ -141,8 +143,8 @@ public class ChatServer {
         }
         
         try {
-            System.out.println(DatatypeConverter.printHexBinary(kp.getPublic().getEncoded()));
-            outStream.write(kp.getPublic().getEncoded());
+            System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
+            outStream.write(keyPair.getPublic().getEncoded());
             outStream.flush();
         } catch (IOException e) {
             System.out.println("I/O Error");

@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        new WhichClient(primaryStage);
+        new WhichClient(primaryStage, new GenKeys().getKP());
     }
 
 
