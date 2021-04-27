@@ -46,19 +46,4 @@ public class GenKeys {
 		return kp;
 	}
 	
-	/**
-	 *  This function returns the private key from the key pair
-	 * @return PrivateKey: The private key of the key pair
-	 */
-	protected static PrivateKey getPrivKey() {
-		return kp.getPrivate();
-	}//End of getPrivKey
-	
-	/**
-	 *  This function returns the public key from the key pair
-	 * @return PublicKey: The public key of the key pair
-	 */
-	protected static PublicKey getPubKey() {
-		return kp.getPublic();
-	}
 }//End of GenKeys
