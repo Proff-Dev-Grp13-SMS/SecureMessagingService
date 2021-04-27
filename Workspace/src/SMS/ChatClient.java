@@ -27,13 +27,14 @@ public class ChatClient {
     private Socket connection; // Active connection to server
     private String name; //User's name
     private Stage stage;
-    private KeyPair kp;
+    private KeyPair keyPair;
     private PublicKey pubKey;
 
-    public ChatClient(Stage s, Socket c, String n) {
+    public ChatClient(Stage s, Socket c, String n, KeyPair kp) {
         connection = c;
         name = n;
         stage = s;
+        keyPair = kp;
         gui();
         try
         {
@@ -96,8 +97,8 @@ public class ChatClient {
 
     	
         try {
-            System.out.println(DatatypeConverter.printHexBinary(kp.getPublic().getEncoded()));
-            outStream.write(kp.getPublic().getEncoded());
+            System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
+            outStream.write(keyPair.getPublic().getEncoded());
             outStream.flush();
         } catch (IOException e) {
             System.out.println("I/O Error");
