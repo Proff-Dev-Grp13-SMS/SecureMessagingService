@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+
+import javax.xml.bind.DatatypeConverter;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,11 +27,14 @@ public class ChatClient {
     private Socket connection; // Active connection to server
     private String name; //User's name
     private Stage stage;
+    private KeyPair keyPair;
+    private PublicKey pubKey;
 
-    public ChatClient(Stage s, Socket c, String n) {
+    public ChatClient(Stage s, Socket c, String n, KeyPair kp) {
         connection = c;
         name = n;
         stage = s;
+        keyPair = kp;
         gui();
         try
         {
@@ -45,6 +55,7 @@ public class ChatClient {
         {
             textWindow.setText("An error has occured");
         }
+        exchangeKeys();
     }
 
     private void gui(){
@@ -86,4 +97,40 @@ public class ChatClient {
         stage.setTitle(name);
         stage.show();
     }
+
+    private void exchangeKeys(){
+
+        System.out.println("1");
+        try {
+            System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
+            outStream.write(keyPair.getPublic().getEncoded());
+            outStream.flush();
+        } catch (IOException e) {
+            System.out.println("I/O Error");
+            System.exit(0);
+        }
+        
+        try
+        {
+          	byte[] servPubKeyBytes = new byte[588];
+           	connection.getInputStream().read(servPubKeyBytes);
+            System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
+               
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            pubKey = kf.generatePublic(ks);
+            System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+        } catch (IOException e) {
+            System.out.println("Error obtaining server public key 1.");
+            System.exit(0);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error obtaining server public key 2.");
+            System.exit(0);
+        } catch (InvalidKeySpecException e) {
+            System.out.println("Error obtaining server public key 3.");
+            System.exit(0);
+        }   
+    }
 }
+
+
