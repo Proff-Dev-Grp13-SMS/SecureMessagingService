@@ -110,6 +110,7 @@ public class ChatClient {
             System.out.println("I/O Error");
             System.exit(0);
         }
+
         try
         {
           	byte[] servPubKeyBytes = new byte[588];
@@ -132,4 +133,5 @@ public class ChatClient {
         }   
     }
 }
+
 
