@@ -8,9 +8,7 @@ import java.nio.ByteBuffer;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-
 import javax.xml.bind.DatatypeConverter;
-
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,6 +17,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
+ *
+ */
 public class ChatClient {
     private TextArea textWindow = new TextArea(); // declare and initialise the text display area
     private OutputStream outStream; // for low level output
