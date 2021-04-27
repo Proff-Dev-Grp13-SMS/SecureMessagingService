@@ -62,11 +62,15 @@ public class ChatClient {
                         try
                         {
                             //Encrypt Here
+                        	text = Crypto.encrypt(text);
                         	outDataStream.writeUTF(text); // transmit the text
                         }
                         catch(IOException ie)
                         {
-                        }
+                        } catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                     }
                 }
         );

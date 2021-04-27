@@ -40,12 +40,16 @@ public class ListenerTask extends Task{
             {
                 msg = dataInputStream.readUTF(); // read the incoming message
                 //Decrypt Here
+                msg = Crypto.decrypt(msg);
                 window.appendText(msg); // display the message
             }
 
             catch(IOException e)
             {
-            }
+            } catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 }
