@@ -61,7 +61,8 @@ public class ChatClient {
 
                         try
                         {
-                            outDataStream.writeUTF(text); // transmit the text
+                            //Encrypt Here
+                        	outDataStream.writeUTF(text); // transmit the text
                         }
                         catch(IOException ie)
                         {

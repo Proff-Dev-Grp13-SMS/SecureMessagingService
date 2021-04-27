@@ -78,6 +78,7 @@ public class ChatServer {
 
                         try
                         {
+                        	//Encrypt Here
                             outDataStream.writeUTF(text); // transmit the text
                         }
 
