@@ -6,11 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.security.KeyPair;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        new WhichClient(primaryStage, new GenKeys().getKP());
+        KeyPair kp = new GenKeys().getKP();
+        new WhichClient(primaryStage, kp);
     }
 
 
