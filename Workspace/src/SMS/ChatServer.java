@@ -37,16 +37,17 @@ public class ChatServer {
     private Stage stage;
     private String name;
     private ServerListenerTask listener;
+    private ListenerTask listener;
     private KeyPair keyPair;
     private PublicKey pubKey;
 
     public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
         stage = s;
-        textWindow.appendText("Listening for connection" + "\n");
         keyPair = kp;
-
         GUI();
+		
+		textWindow.appendText("Listening for connection" + "\n");
         try
         {
             // create a server socket
@@ -115,7 +116,8 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
-  
+
+
     private void exchangeKeys(){
         while(pubKey.equals(null))
         {
@@ -142,7 +144,6 @@ public class ChatServer {
         }
         
         try {
-
             System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
             outStream.write(keyPair.getPublic().getEncoded());
             outStream.flush();
