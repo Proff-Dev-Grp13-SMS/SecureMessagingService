@@ -130,7 +130,6 @@ public class ChatClient {
             System.out.println("Error obtaining server public key 3.");
             System.exit(0);
         }   
-
     }
 }
 
