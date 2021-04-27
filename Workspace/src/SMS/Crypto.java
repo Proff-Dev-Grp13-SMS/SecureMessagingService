@@ -28,7 +28,11 @@ public class Crypto extends GenKeys {
 	//MUH KEYS
 	private static PrivateKey privKey = kp.getPrivate();
 	//private static PublicKey pubKey = kp.getPublic();
-	private static PublicKey pubKey = null;//Retrieve foreign key 
+	private static PublicKey pubKey = null;//Retrieve foreign key
+	
+	private static PublicKey setPubKey() {
+		return pubKey;
+	}
 	
 	/**
 	 * Function is responsible for making a usable PublicKey for the user
