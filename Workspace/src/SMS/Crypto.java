@@ -27,7 +27,8 @@ import javax.crypto.NoSuchPaddingException;
 public class Crypto extends GenKeys {
 	//MUH KEYS
 	private static PrivateKey privKey = kp.getPrivate();
-	private static PublicKey pubKey = kp.getPublic();
+	//private static PublicKey pubKey = kp.getPublic();
+	private static PublicKey pubKey = ExchangeKeys.getkey(); 
 	
 	/**
 	 * Function is responsible for making a usable PublicKey for the user
