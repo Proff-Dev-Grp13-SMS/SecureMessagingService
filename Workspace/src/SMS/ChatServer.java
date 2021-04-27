@@ -12,7 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+/**
+ * 
+ * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
+ *
+ */
 
 public class ChatServer {
     // declare and initialise the text display area

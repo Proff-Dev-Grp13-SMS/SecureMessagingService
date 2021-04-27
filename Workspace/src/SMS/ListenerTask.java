@@ -5,7 +5,11 @@ import java.io.InputStream;
 import java.net.Socket;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
-
+/**
+ * 
+ * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
+ *
+ */
 public class ListenerTask extends Task{
     private InputStream inputStream; // for low level input
     private DataInputStream dataInputStream; // for high level input
