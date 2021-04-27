@@ -17,8 +17,8 @@ import javax.crypto.NoSuchPaddingException;
  * Crypto Class
  * @author Liam Walton
  * This class is responsible for encrypting data for the application.
- * Code snippets used from: https://www.devglan.com/java8/rsa-encryption-decryption-java#/google_vignette
- * 							https://examples.javacodegeeks.com/core-java/security/get-bytes-of-a-key-pair-example/
+ * Code snippets used/adapted from: https://www.devglan.com/java8/rsa-encryption-decryption-java#/google_vignette
+ * 									https://examples.javacodegeeks.com/core-java/security/get-bytes-of-a-key-pair-example/
  */
 public class Crypto extends GenKeys {
 	/**
@@ -42,6 +42,16 @@ public class Crypto extends GenKeys {
 		return returnMe;
 	}//End of getKeySpecPK
 	
+	/**
+	 * This function takes in a string of data and encrypts it
+	 * @param String data: The outgoing message to be encrypted
+	 * @return Cipher cipher: The encrypted outgoing data
+	 * @throws BadPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws InvalidKeyException
+	 * @throws NoSuchPaddingException
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static byte[] encrypt(String data) throws BadPaddingException, IllegalBlockSizeException,
 													InvalidKeyException, NoSuchPaddingException, 
 													NoSuchAlgorithmException
@@ -50,5 +60,5 @@ public class Crypto extends GenKeys {
 		Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, getKeySpecPK());
 		return cipher.doFinal(data.getBytes());
-	}
-}
+	}//End of encrypt
+}//End of Class
