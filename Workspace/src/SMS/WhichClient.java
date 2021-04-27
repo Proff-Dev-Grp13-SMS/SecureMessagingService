@@ -19,7 +19,7 @@ public class WhichClient {
     public WhichClient(Stage s, KeyPair kp) {
         stage = s;
         Socket connection; // declare a "general" socket
-        System.out.println("1");
+
         try
         {
             // create a connection to the server
@@ -31,7 +31,6 @@ public class WhichClient {
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage());
             System.out.println("Starting Server");
             new ChatServer(getName(), stage, kp);
 

@@ -102,7 +102,6 @@ public class ChatClient {
     }
 
     private void exchangeKeys(){
-
         try {
             System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
             outStream.write(keyPair.getPublic().getEncoded());
