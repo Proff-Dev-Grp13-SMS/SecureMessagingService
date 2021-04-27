@@ -17,6 +17,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
+
 /**
  * 
  * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
@@ -114,9 +115,7 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
-
-
-    
+  
     private void exchangeKeys(){
         while(pubKey.equals(null))
         {
@@ -143,6 +142,7 @@ public class ChatServer {
         }
         
         try {
+
             System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
             outStream.write(keyPair.getPublic().getEncoded());
             outStream.flush();
