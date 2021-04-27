@@ -28,7 +28,7 @@ public class ChatClient {
     private String name; //User's name
     private Stage stage;
     private KeyPair keyPair;
-    private PublicKey pubKey;
+    private PublicKey foreignPubKey;
 
     public ChatClient(Stage s, Socket c, String n, KeyPair kp) {
         connection = c;
@@ -118,8 +118,8 @@ public class ChatClient {
                
             X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
-            pubKey = kf.generatePublic(ks);
-            System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+            foreignPubKey = kf.generatePublic(ks);
+            System.out.println(DatatypeConverter.printHexBinary(foreignPubKey.getEncoded()));
         } catch (IOException e) {
             System.out.println("Error obtaining server public key 1.");
             System.exit(0);

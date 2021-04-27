@@ -35,7 +35,7 @@ public class ChatServer {
     private ListenerTask listener;
     
     private KeyPair keyPair;
-    private PublicKey pubKey;
+    private PublicKey foreignPubKey;
 
     public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
@@ -119,15 +119,14 @@ public class ChatServer {
     private void exchangeKeys(){
         try
         {
-        	System.out.println("1");
            	byte[] servPubKeyBytes = new byte[588];
            	connection.getInputStream().read(servPubKeyBytes);
             System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
                
             X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
-            pubKey = kf.generatePublic(ks);
-            System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+            foreignPubKey = kf.generatePublic(ks);
+            System.out.println(DatatypeConverter.printHexBinary(foreignPubKey.getEncoded()));
         } catch (IOException e) {
             System.out.println("Error obtaining server public key 1.");
             System.exit(0);
