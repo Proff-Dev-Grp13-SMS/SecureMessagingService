@@ -25,6 +25,8 @@ public class ChatServer {
 
     private Socket connection; // declare a "general" socket
     private ServerSocket listenSocket; // declare a server socket
+    private OutputStream outStream; // for low level output
+    private DataOutputStream outDataStream; // for high level output
 
     private TextArea textWindow = new TextArea();
     private Stage stage;
@@ -34,7 +36,7 @@ public class ChatServer {
     public ChatServer(String n, Stage s) {
         name = n;
         stage = s;
-        textWindow.appendText("Listening for connection");
+        textWindow.appendText("Listening for connection" + "\n");
 
         GUI();
         try
@@ -78,7 +80,9 @@ public class ChatServer {
 
                             try
                             {
-                            	connection.getOutputStream().write(text.getBytes());
+                            	outStream = connection.getOutputStream();
+                                outDataStream = new DataOutputStream (outStream);
+                                outDataStream.writeUTF(text); // transmit the text
                             }
                             catch(IOException ie)
                             {
