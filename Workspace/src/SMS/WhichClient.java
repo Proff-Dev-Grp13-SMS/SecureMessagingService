@@ -5,7 +5,11 @@ import java.util.Optional;
 import javafx.application.Application;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
-
+/**
+ * 
+ * @author Anna Turner
+ *
+ */
 public class WhichClient {
 
     Stage stage;
