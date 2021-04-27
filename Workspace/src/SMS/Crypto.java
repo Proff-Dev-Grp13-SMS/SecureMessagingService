@@ -22,8 +22,13 @@ import javax.crypto.NoSuchPaddingException;
  * Code snippets used/adapted from: 
  * https://www.devglan.com/java8/rsa-encryption-decryption-java#/google_vignette
  * https://examples.javacodegeeks.com/core-java/security/get-bytes-of-a-key-pair-example/
+ * https://www.quickprogrammingtips.com/java/java-asymmetric-encryption-decryption-example-with-rsa.html
  */
 public class Crypto extends GenKeys {
+	//MUH KEYS
+	private static PrivateKey privKey = kp.getPrivate();
+	private static PublicKey pubKey = kp.getPublic();
+	
 	/**
 	 * Function is responsible for making a usable PublicKey for the user
 	 * @return PublicKey returnMe: A usable public key for encryption
@@ -69,7 +74,8 @@ public class Crypto extends GenKeys {
         }
 		
 		return returnMe;
-	}
+	}//End of getKeySpecPRK
+	
 	
 	/**
 	 * This function takes in a string of data and encrypts it
@@ -81,7 +87,8 @@ public class Crypto extends GenKeys {
 	 * @throws NoSuchPaddingException
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static byte[] encrypt(String data) throws BadPaddingException, IllegalBlockSizeException, 
+	
+	public static byte[] oldEncrypt(String data) throws BadPaddingException, IllegalBlockSizeException, 
 	InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException
 	{
 		//Create Cipher
@@ -89,4 +96,50 @@ public class Crypto extends GenKeys {
 		cipher.init(Cipher.ENCRYPT_MODE, getKeySpecPK());
 		return cipher.doFinal(data.getBytes());
 	}//End of encrypt
+	
+	public static String oldDecrypt(String data) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, 
+	NoSuchAlgorithmException, NoSuchPaddingException
+	{
+		/*
+		 * Attempted Workaround
+		//Get Bytes of inc. message
+		byte[] incoming = data.getBytes();
+		//Decode/Decrypt
+		incoming = Base64.getDecoder().decode(data.getBytes()), getKeySpecPRK();
+		*/
+		
+		/*
+		 * Below code is from source 1, I cannot get it to work.
+		 * Above code is my attempt to make a workaround but doesn't work as I need something with name(Decode, key)
+		 */
+		//return new decrypt(Base64.getDecoder().decode(data.getBytes()), getKeySpecPRK());
+		return "I'm a function that doesn't yet work! See comments!";
+	}
+	
+	
+	//New Classes, uses a much simpler, more applicable method for now. Above is probably much more secure
+	/**
+	 * PrivateKey Encryption of PlainText String
+	 * @param String plainText: The PlainText to be encrypted
+	 * @return String: Encrypted String
+	 * @throws Exception
+	 */
+	public static String encrypt(String plainText) throws Exception
+	{
+		Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.ENCRYPT_MODE, privKey);
+		return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.getBytes()));
+	}//End of encrypt
+	/**
+	 * PublicKey Decryption of Encrypted PlainText String
+	 * @param encryptedText
+	 * @return
+	 * @throws Exception
+	 */
+	public static String decrypt(String encryptedText) throws Exception
+	{
+		Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.DECRYPT_MODE, pubKey);
+		return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedText)));
+	}
 }//End of Class
