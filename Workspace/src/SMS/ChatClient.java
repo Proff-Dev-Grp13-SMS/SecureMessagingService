@@ -30,7 +30,6 @@ public class ChatClient {
     private Socket connection; // Active connection to server
     private String name; //User's name
     private Stage stage;
-    private KeyPair keyPair;
     private PublicKey pubKey;
 
     public ChatClient(Stage s, Socket c, String n) {
@@ -102,7 +101,6 @@ public class ChatClient {
 
     private void exchangeKeys(){
 
-        System.out.println("1");
         try {
             System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
             outStream.write(keyPair.getPublic().getEncoded());
@@ -134,5 +132,4 @@ public class ChatClient {
         }   
     }
 }
-
 

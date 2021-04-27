@@ -12,12 +12,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
 /**
  * 
  * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
  *
  */
-
 public class ChatServer {
     // declare and initialise the text display area
 
@@ -59,6 +63,7 @@ public class ChatServer {
         {
             textWindow.setText("An error has occurred");
         }
+        exchangeKeys();
 
     }
 
@@ -106,4 +111,46 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
+
+    private KeyPair kp;
+    private PublicKey pubKey;
+    
+    private void exchangeKeys(){
+        while(pubKey.equals(null))
+        {
+            try
+            {
+            	byte[] servPubKeyBytes = new byte[2048];
+            	connection.getInputStream().read(servPubKeyBytes);
+                System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
+                
+                X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
+                KeyFactory kf = KeyFactory.getInstance("RSA");
+                pubKey = kf.generatePublic(ks);
+                System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+            } catch (IOException e) {
+                System.out.println("Error obtaining server public key 1.");
+                System.exit(0);
+            } catch (NoSuchAlgorithmException e) {
+                System.out.println("Error obtaining server public key 2.");
+                System.exit(0);
+            } catch (InvalidKeySpecException e) {
+                System.out.println("Error obtaining server public key 3.");
+                System.exit(0);
+            }   
+        }
+        
+        try {
+            System.out.println(DatatypeConverter.printHexBinary(kp.getPublic().getEncoded()));
+            outStream.write(kp.getPublic().getEncoded());
+            outStream.flush();
+        } catch (IOException e) {
+            System.out.println("I/O Error");
+            System.exit(0);
+        }
+
+    }
+
+
+
 }
