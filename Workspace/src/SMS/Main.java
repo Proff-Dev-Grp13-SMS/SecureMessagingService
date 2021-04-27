@@ -19,7 +19,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+        //Generate Keys here
+    	GenKeys.generateKeys();
+    	launch(args);
     }
 
     @Override

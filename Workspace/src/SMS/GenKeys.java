@@ -7,7 +7,7 @@ package SMS;
 import java.security.*;
 public class GenKeys {
 	//Private Variables
-	private KeyPairGenerator keyGen;
+	private static KeyPairGenerator keyGen;
 	private static SecureRandom sr;
 	protected static KeyPair kp;
 	
@@ -15,7 +15,7 @@ public class GenKeys {
 	 * This function is designed to return a secure, usable random number 
 	 * @return SecureRandom sr: Returns an initialised SecureRandom for use in generateKeys()
 	 */
-	private SecureRandom generateSecureRandom() {
+	private static SecureRandom generateSecureRandom() {
 		try {
 			sr = SecureRandom.getInstance("SHA1PRNG", "SUN");//Generation of SecureRandom
 		} catch (NoSuchAlgorithmException | NoSuchProviderException e) {
@@ -27,7 +27,7 @@ public class GenKeys {
 	/**
 	 * This function is responsible for generating the key pair for crypto 
 	 */
-	public void generateKeys() {
+	public static void generateKeys() {
 		try {
 			generateSecureRandom();//Create the sr
 			keyGen = KeyPairGenerator.getInstance("RSA");
