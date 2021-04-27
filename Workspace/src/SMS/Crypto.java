@@ -9,6 +9,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
@@ -16,9 +17,15 @@ import javax.crypto.NoSuchPaddingException;
  * Crypto Class
  * @author Liam Walton
  * This class is responsible for encrypting data for the application.
+ * Code snippets used from: https://www.devglan.com/java8/rsa-encryption-decryption-java#/google_vignette
+ * 							https://examples.javacodegeeks.com/core-java/security/get-bytes-of-a-key-pair-example/
  */
 public class Crypto extends GenKeys {
-	public static PublicKey getKeySpec() {
+	/**
+	 * Function is responsible for getting the key spec of the Public Key Generated for the user
+	 * @return PublicKey returnMe: A usable public key for encryption
+	 */
+	private static PublicKey getKeySpecPK() {
 		PublicKey myKey = kp.getPublic();//Key to get bytes from
 		PublicKey returnMe = null;//New Key to return
 		try {
@@ -33,14 +40,15 @@ public class Crypto extends GenKeys {
             e.printStackTrace();
         }
 		return returnMe;
-	}//End of getKeySpec
+	}//End of getKeySpecPK
 	
 	public static byte[] encrypt(String data) throws BadPaddingException, IllegalBlockSizeException,
 													InvalidKeyException, NoSuchPaddingException, 
 													NoSuchAlgorithmException
 	{
 		//Create Cipher
-		
-		return 0;
+		Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
+		cipher.init(Cipher.ENCRYPT_MODE, getKeySpecPK());
+		return cipher.doFinal(data.getBytes());
 	}
 }
