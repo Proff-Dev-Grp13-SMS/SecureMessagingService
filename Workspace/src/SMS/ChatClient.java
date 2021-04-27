@@ -114,7 +114,7 @@ public class ChatClient {
         {
             try
             {
-            	byte[] servPubKeyBytes = new byte[2048];
+            	byte[] servPubKeyBytes = new byte[588];
             	connection.getInputStream().read(servPubKeyBytes);
                 System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
                 
