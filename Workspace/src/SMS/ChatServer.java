@@ -82,6 +82,7 @@ public class ChatServer {
                             {
                             	outStream = connection.getOutputStream();
                                 outDataStream = new DataOutputStream (outStream);
+								//Encrypt Here
                                 outDataStream.writeUTF(text); // transmit the text
                             }
                             catch(IOException ie)
@@ -91,7 +92,6 @@ public class ChatServer {
                 			textWindow.appendText("\n");
                     		textWindow.appendText("Waiting for connection");
                     	}
-                        
                     }
                 });
 
