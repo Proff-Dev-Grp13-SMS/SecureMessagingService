@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e572e723-378c-4767-a2ca-319d5e32bd62" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/src/SMS/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/src/SMS/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/src/SMS/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/src/SMS/ChatServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,19 +23,6 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -48,6 +33,8 @@
       <updated>1619207691547</updated>
       <workItem from="1619207693061" duration="38000" />
       <workItem from="1619528914525" duration="971000" />
+      <workItem from="1619618745655" duration="41000" />
+      <workItem from="1619618792604" duration="19000" />
     </task>
     <servers />
   </component>
@@ -55,13 +42,13 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1174" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619529883282">
+    <state x="1174" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619618806951">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
-    <state x="1174" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.3440.1400@0.0.3440.1400" timestamp="1619529883282" />
-    <state x="1449" y="490" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1619529881913">
+    <state x="1174" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.3440.1400@0.0.3440.1400" timestamp="1619618806951" />
+    <state x="1449" y="490" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1619618806135">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
-    <state x="1449" y="490" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.3440.1400@0.0.3440.1400" timestamp="1619529881913" />
+    <state x="1449" y="490" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.3440.1400@0.0.3440.1400" timestamp="1619618806135" />
   </component>
 </project>

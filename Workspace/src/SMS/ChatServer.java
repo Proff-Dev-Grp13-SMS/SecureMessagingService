@@ -37,14 +37,12 @@ public class ChatServer {
     private Stage stage;
     private String name;
     private ServerListenerTask listener;
-    private ListenerTask listener;
-    private KeyPair keyPair;
-    private static PublicKey pubKey;
+
 
     public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
         stage = s;
-        keyPair = kp;
+
         GUI();
 		
 		textWindow.appendText("Listening for connection" + "\n");
@@ -55,7 +53,7 @@ public class ChatServer {
 
 
             // create a thread to listen for messages
-            listener = new ServerListenerTask(textWindow, listenSocket);
+            listener = new ServerListenerTask(textWindow, listenSocket, kp);
 
 
             Thread thread = new Thread(listener);
@@ -68,8 +66,6 @@ public class ChatServer {
         {
             textWindow.setText("An error has occurred");
         }
-        exchangeKeys();
-
     }
 
     public void GUI()
@@ -116,48 +112,4 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
-
-
-    private void exchangeKeys(){
-        try
-        {
-        	System.out.println("1");
-           	byte[] servPubKeyBytes = new byte[588];
-           	connection.getInputStream().read(servPubKeyBytes);
-            System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
-               
-            X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            pubKey = kf.generatePublic(ks);
-            System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
-        } catch (IOException e) {
-            System.out.println("Error obtaining server public key 1.");
-            System.exit(0);
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Error obtaining server public key 2.");
-            System.exit(0);
-        } catch (InvalidKeySpecException e) {
-            System.out.println("Error obtaining server public key 3.");
-            System.exit(0);
-        }   
-        
-        try {
-            System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
-            outStream.write(keyPair.getPublic().getEncoded());
-            outStream.flush();
-        } catch (IOException e) {
-            System.out.println("I/O Error");
-            System.exit(0);
-        }
-
-    }
-    
-    /**
-     * Gets the public key received from User2, to be used in the listener class
-     * @return PublicKey pubKey: The public key received from the user
-     */
-    public static PublicKey getKey() {
-    	return pubKey;
-    }
-
 }
