@@ -102,6 +102,7 @@ public class ChatClient {
     }
 
     private void exchangeKeys(){
+
         try {
             System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
             outStream.write(keyPair.getPublic().getEncoded());
@@ -110,7 +111,6 @@ public class ChatClient {
             System.out.println("I/O Error");
             System.exit(0);
         }
-
         try
         {
           	byte[] servPubKeyBytes = new byte[588];

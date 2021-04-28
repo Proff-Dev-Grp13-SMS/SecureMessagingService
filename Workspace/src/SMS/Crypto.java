@@ -125,7 +125,7 @@ public class Crypto extends GenKeys {
 	 */
 	public static String encrypt(String plainText) throws Exception
 	{
-		Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
+		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.ENCRYPT_MODE, privKey);
 		return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.getBytes()));
 	}//End of encrypt
@@ -137,7 +137,8 @@ public class Crypto extends GenKeys {
 	 */
 	public static String decrypt(String encryptedText, PublicKey pubKey) throws Exception
 	{
-		Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
+
+		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.DECRYPT_MODE, pubKey);
 		return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedText)));
 	}

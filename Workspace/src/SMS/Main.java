@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.security.KeyPair;
+import java.security.KeyPair;
+
 
 /**
  * 
@@ -19,6 +21,7 @@ public class Main extends Application {
         GenKeys.generateKeys();
         KeyPair kp = GenKeys.getKP();
         new WhichClient(primaryStage, kp);
+
     }
 
 
