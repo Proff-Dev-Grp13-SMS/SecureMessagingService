@@ -108,5 +108,4 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
-
 }
