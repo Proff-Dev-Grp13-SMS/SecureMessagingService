@@ -64,15 +64,15 @@ public class ServerListenerTask extends Task{
                 	{
                 	}
         	}
-		try
-            	{
-                msg = dataInputStream.readUTF(); // read the incoming message
-                window.appendText(msg); // display the message
-            	}
-            	catch(IOException e)
-            	{
-            	}
-	}
+			try
+			{
+				msg = dataInputStream.readUTF(); // read the incoming message
+				window.appendText(Crypto.decrypt(msg)); // display the message
+			}
+			catch(Exception e)
+			{
+			}
+		}
     }
 
     
@@ -101,6 +101,7 @@ public class ServerListenerTask extends Task{
 			KeyFactory kf = KeyFactory.getInstance("RSA");
 			pubKey = kf.generatePublic(ks);
 			System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+			Crypto.setForeignKey(pubKey);
 			//Send Foreign Key to Crypto
 		} catch (IOException e) {
 			System.out.println("Error obtaining server public key 1.");

@@ -20,10 +20,9 @@ import javax.crypto.NoSuchPaddingException;
  * https://examples.javacodegeeks.com/core-java/security/get-bytes-of-a-key-pair-example/
  * https://www.quickprogrammingtips.com/java/java-asymmetric-encryption-decryption-example-with-rsa.html
  */
-public class Crypto extends GenKeys {
+public class Crypto {
 	//MUH KEYS
-	private static KeyPair kp;
-	private static PrivateKey privKey = kp.getPrivate();
+	private static KeyPair keyPair;
 	private static PublicKey foreignKey;
 	
 	/**
@@ -31,7 +30,7 @@ public class Crypto extends GenKeys {
 	 * @return PublicKey returnMe: A usable public key for encryption
 	 */
 	private static PublicKey getKeySpecPK() {
-		PublicKey myKey = kp.getPublic();//Key to get bytes from
+		PublicKey myKey = keyPair.getPublic();//Key to get bytes from
 		PublicKey returnMe = null;//New Key to return
 		
 		try {
@@ -56,7 +55,7 @@ public class Crypto extends GenKeys {
 	 * @return PrivateKey returnMe: A usable private key for decryption
 	 */
 	private static PrivateKey getKeySpecPRK() {
-		PrivateKey myKey = kp.getPrivate();//Key to convert
+		PrivateKey myKey = keyPair.getPrivate();//Key to convert
 		PrivateKey returnMe = null;//Key to return
 		
 		try {
@@ -76,7 +75,7 @@ public class Crypto extends GenKeys {
 	
 	/**
 	 * This function takes in a string of data and encrypts it
-	 * @param String data: The outgoing message to be encrypted
+	 * @param data: The outgoing message to be encrypted
 	 * @return Cipher cipher: The encrypted outgoing data
 	 * @throws BadPaddingException
 	 * @throws IllegalBlockSizeException
@@ -117,7 +116,7 @@ public class Crypto extends GenKeys {
 	//New Classes, uses a much simpler, more applicable method for now. Above is probably much more secure
 	/**
 	 * PrivateKey Encryption of PlainText String
-	 * @param String plainText: The PlainText to be encrypted
+	 * @param plainText: The PlainText to be encrypted
 	 * @return String: Encrypted String
 	 * @throws Exception
 	 */
@@ -125,7 +124,7 @@ public class Crypto extends GenKeys {
 	{
 		//Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
 		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, privKey);
+		cipher.init(Cipher.ENCRYPT_MODE, foreignKey);
 		return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.getBytes()));
 	}//End of encrypt
 	/**
@@ -134,15 +133,19 @@ public class Crypto extends GenKeys {
 	 * @return String: The decrypted text
 	 * @throws Exception
 	 */
-	public static String decrypt(String encryptedText, PublicKey pubKey) throws Exception
+	public static String decrypt(String encryptedText) throws Exception
 	{
 		//Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
 		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, pubKey);
+		cipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
 		return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedText)));
 	}
 
 	public static void setForeignKey(PublicKey fk){
 		foreignKey = fk;
+	}
+
+	public static void setLocalKEys(KeyPair kp){
+		keyPair = kp;
 	}
 }//End of Class

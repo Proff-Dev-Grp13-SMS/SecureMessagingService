@@ -39,10 +39,14 @@ public class ChatServer {
     private ServerListenerTask listener;
 
 
+
     public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
         stage = s;
         GUI();
+        Crypto.setLocalKEys(kp);
+
+
 		
 		textWindow.appendText("Listening for connection" + "\n");
         try
@@ -81,10 +85,9 @@ public class ChatServer {
                             {
                             	outStream = connection.getOutputStream();
                                 outDataStream = new DataOutputStream (outStream);
-								//Encrypt Here
-                                outDataStream.writeUTF(text); // transmit the text
+                                outDataStream.writeUTF(Crypto.encrypt(text)); // transmit the text
                             }
-                            catch(IOException ie)
+                            catch(Exception ie)
                             {
                             }  
                 		}else{

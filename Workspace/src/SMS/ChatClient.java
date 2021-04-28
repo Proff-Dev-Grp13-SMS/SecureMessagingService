@@ -38,6 +38,7 @@ public class ChatClient {
         name = n;
         stage = s;
         keyPair = kp;
+        Crypto.setLocalKEys(kp);
         gui();
         try
         {
@@ -120,6 +121,7 @@ public class ChatClient {
             X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             pubKey = kf.generatePublic(ks);
+            Crypto.setForeignKey(pubKey);
             System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
         } catch (IOException e) {
             System.out.println("Error obtaining server public key 1.");
@@ -132,14 +134,7 @@ public class ChatClient {
             System.exit(0);
         }   
     }
-    
-    /**
-     * Gets the public key received from User2, to be used in the listener class
-     * @return PublicKey pubKey: The public key received from the user
-     */
-    public static PublicKey getKey() {
-    	return pubKey;
-    }
+
 }
 
 
