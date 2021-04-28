@@ -104,5 +104,12 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
-
+    
+    /**
+     * Gets the public key received from User2, to be used in the listener class
+     * @return PublicKey pubKey: The public key received from the user
+     */
+    public static PublicKey getKey() {
+    	return pubKey;
+    }
 }

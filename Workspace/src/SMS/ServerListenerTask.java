@@ -67,6 +67,7 @@ public class ServerListenerTask extends Task{
 		try
             	{
                 msg = dataInputStream.readUTF(); // read the incoming message
+                msg = Crypto.decrypt(msg, ChatServer.getKey());
                 window.appendText(msg); // display the message
             	}
             	catch(IOException e)

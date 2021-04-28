@@ -43,7 +43,7 @@ public class ClientListenerTask extends Task{
             try
             {
                 msg = dataInputStream.readUTF(); // read the incoming message
-                //Decrypt Here
+                msg = Crypto.decrypt(msg, ChatClient.getKey());
                 window.appendText(msg); // display the message
             }
 
