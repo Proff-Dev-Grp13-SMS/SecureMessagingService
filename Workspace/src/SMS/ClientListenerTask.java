@@ -44,7 +44,6 @@ public class ClientListenerTask extends Task{
             {
                 msg = dataInputStream.readUTF(); // read the incoming message
                 //Decrypt Here
-                msg = Crypto.decrypt(msg);
                 window.appendText(msg); // display the message
             }
 

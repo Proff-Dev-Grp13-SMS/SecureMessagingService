@@ -39,7 +39,7 @@ public class ChatServer {
     private ServerListenerTask listener;
     private ListenerTask listener;
     private KeyPair keyPair;
-    private PublicKey pubKey;
+    private static PublicKey pubKey;
 
     public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
@@ -152,6 +152,8 @@ public class ChatServer {
 
     }
 
-
+    public static PublicKey getKey() {
+    	return pubKey;
+    }
 
 }
