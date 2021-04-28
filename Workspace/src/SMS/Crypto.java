@@ -132,7 +132,7 @@ public class Crypto extends GenKeys {
 	/**
 	 * PublicKey Decryption of Encrypted PlainText String
 	 * @param encryptedText
-	 * @return
+	 * @return String: The decrypted text
 	 * @throws Exception
 	 */
 	public static String decrypt(String encryptedText, PublicKey pubKey) throws Exception
