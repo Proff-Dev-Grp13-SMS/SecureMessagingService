@@ -93,17 +93,15 @@ public class ServerListenerTask extends Task{
 	private void exchangeKeys(){
 		try
 		{
-			System.out.println("1");
 			byte[] servPubKeyBytes = new byte[588];
-			System.out.println("2");
 			connection.getInputStream().read(servPubKeyBytes);
-			System.out.println("3");
 			System.out.println(DatatypeConverter.printHexBinary(servPubKeyBytes));
-			System.out.println("4");
+
 			X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
 			KeyFactory kf = KeyFactory.getInstance("RSA");
 			pubKey = kf.generatePublic(ks);
 			System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
+
 		} catch (IOException e) {
 			System.out.println("Error obtaining server public key 1.");
 			System.exit(0);
