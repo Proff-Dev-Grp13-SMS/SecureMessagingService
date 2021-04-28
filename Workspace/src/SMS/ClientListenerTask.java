@@ -10,14 +10,14 @@ import javafx.scene.control.TextArea;
  * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
  *
  */
-public class ListenerTask extends Task{
+public class ClientListenerTask extends Task{
     private InputStream inputStream; // for low level input
     private DataInputStream dataInputStream; // for high level input
     private TextArea window; // a reference to the text area where the message will be displayed
     private Socket connection; // a reference to the connection
 
     // constructor receives references to the text area and the connection
-    public ListenerTask(TextArea windowIn, Socket connectionIn)
+    public ClientListenerTask(TextArea windowIn, Socket connectionIn)
     {
         window = windowIn;
         connection = connectionIn;

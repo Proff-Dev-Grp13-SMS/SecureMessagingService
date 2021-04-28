@@ -21,22 +21,22 @@ import javafx.stage.Stage;
 public class ChatServer {
     // declare and initialise the text display area
 
-    private OutputStream outStream; // for low level output
-    private DataOutputStream outDataStream; // for high level output
     private final int port = 8901;
 
     private Socket connection; // declare a "general" socket
     private ServerSocket listenSocket; // declare a server socket
+    private OutputStream outStream; // for low level output
+    private DataOutputStream outDataStream; // for high level output
 
     private TextArea textWindow = new TextArea();
     private Stage stage;
     private String name;
-    private ListenerTask listener;
+    private ServerListenerTask listener;
 
     public ChatServer(String n, Stage s) {
         name = n;
         stage = s;
-        textWindow.appendText("Listening for connection");
+        textWindow.appendText("Listening for connection" + "\n");
 
         GUI();
         try
@@ -44,18 +44,15 @@ public class ChatServer {
             // create a server socket
             listenSocket = new ServerSocket(port);
 
-            // listen for a connection from the client
-            connection = listenSocket.accept();
-
-            // create an output stream to the connection
-            outStream = connection.getOutputStream ();
-            outDataStream = new DataOutputStream(outStream );
 
             // create a thread to listen for messages
-            listener = new ListenerTask(textWindow, connection);
+            listener = new ServerListenerTask(textWindow, listenSocket);
+
 
             Thread thread = new Thread(listener);
+
             thread.start(); // start the thread
+
 
         }
         catch (IOException e)
@@ -72,25 +69,31 @@ public class ChatServer {
         // configure the behaviour of the input window
         inputWindow.setOnKeyReleased(e ->
                 {
-                    String text;
-
-                    if(e.getCode().getName().equals("Enter"))  // if the <Enter> key was pressed
+                	if(e.getCode().getName().equals("Enter"))  // if the <Enter> key was pressed
                     {
-                        text = "<" + name + "> " +  inputWindow.getText() + "\n";
-                        textWindow.appendText(text); // echo the text
-                        inputWindow.setText(""); // clear the input window
+                		if(listener.isConnected()) {
+                    		connection = listener.getConnection();
+                    		String text;
+                    		text = "<" + name + "> " +  inputWindow.getText() + "\n";
+                            textWindow.appendText(text); // echo the text
+                            inputWindow.setText(""); // clear the input window
 
-                        try
-                        {
-                            outDataStream.writeUTF(text); // transmit the text
-                        }
-
-                        catch(IOException ie)
-                        {
-                        }
+                            try
+                            {
+                            	outStream = connection.getOutputStream();
+                                outDataStream = new DataOutputStream (outStream);
+                                outDataStream.writeUTF(text); // transmit the text
+                            }
+                            catch(IOException ie)
+                            {
+                            }  
+                		}else{
+                			textWindow.appendText("\n");
+                    		textWindow.appendText("Waiting for connection");
+                    	}
+                        
                     }
-                }
-        );
+                });
 
         // configure the visual components
         textWindow.setEditable(false);
