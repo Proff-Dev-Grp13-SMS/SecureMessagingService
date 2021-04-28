@@ -27,12 +27,6 @@ import javax.crypto.NoSuchPaddingException;
 public class Crypto extends GenKeys {
 	//MUH KEYS
 	private static PrivateKey privKey = kp.getPrivate();
-	//private static PublicKey pubKey = kp.getPublic();
-	private static PublicKey pubKey = null;//Retrieve foreign key
-	
-	private static PublicKey setPubKey() {
-		return pubKey;
-	}
 	
 	/**
 	 * Function is responsible for making a usable PublicKey for the user
@@ -141,7 +135,7 @@ public class Crypto extends GenKeys {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String decrypt(String encryptedText) throws Exception
+	public static String decrypt(String encryptedText, PublicKey pubKey) throws Exception
 	{
 		Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
 		cipher.init(Cipher.DECRYPT_MODE, pubKey);
