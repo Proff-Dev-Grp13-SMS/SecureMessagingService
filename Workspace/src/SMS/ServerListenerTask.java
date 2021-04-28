@@ -101,7 +101,7 @@ public class ServerListenerTask extends Task{
 			KeyFactory kf = KeyFactory.getInstance("RSA");
 			pubKey = kf.generatePublic(ks);
 			System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
-
+			//Send Foreign Key to Crypto
 		} catch (IOException e) {
 			System.out.println("Error obtaining server public key 1.");
 			System.exit(0);

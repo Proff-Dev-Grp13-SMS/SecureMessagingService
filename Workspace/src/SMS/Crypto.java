@@ -1,10 +1,6 @@
 package SMS;
 
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -26,7 +22,9 @@ import javax.crypto.NoSuchPaddingException;
  */
 public class Crypto extends GenKeys {
 	//MUH KEYS
+	private static KeyPair kp;
 	private static PrivateKey privKey = kp.getPrivate();
+	private static PublicKey foreignKey;
 	
 	/**
 	 * Function is responsible for making a usable PublicKey for the user
@@ -125,6 +123,7 @@ public class Crypto extends GenKeys {
 	 */
 	public static String encrypt(String plainText) throws Exception
 	{
+		//Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.ENCRYPT_MODE, privKey);
 		return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.getBytes()));
@@ -137,9 +136,13 @@ public class Crypto extends GenKeys {
 	 */
 	public static String decrypt(String encryptedText, PublicKey pubKey) throws Exception
 	{
-
+		//Cipher cipher = Cipher.getInstance("SA/None/OAEPWithSHA1AndMGF1Padding");
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.DECRYPT_MODE, pubKey);
 		return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedText)));
+	}
+
+	public static void setForeignKey(PublicKey fk){
+		foreignKey = fk;
 	}
 }//End of Class
