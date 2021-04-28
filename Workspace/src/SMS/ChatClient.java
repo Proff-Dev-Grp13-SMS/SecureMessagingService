@@ -28,7 +28,7 @@ public class ChatClient {
     private String name; //User's name
     private Stage stage;
     private KeyPair keyPair;
-    private PublicKey pubKey;
+    private static PublicKey pubKey;
 
     public ChatClient(Stage s, Socket c, String n, KeyPair kp) {
         connection = c;
@@ -130,6 +130,10 @@ public class ChatClient {
             System.out.println("Error obtaining server public key 3.");
             System.exit(0);
         }   
+    }
+    
+    public static PublicKey getKey() {
+    	return pubKey;
     }
 }
 
