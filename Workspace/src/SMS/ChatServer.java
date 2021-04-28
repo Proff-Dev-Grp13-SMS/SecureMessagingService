@@ -12,12 +12,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
+
 /**
  * 
  * @author Quentin Charatan & Aaron Khans (Java in Two Semesters 4th Ed., Liam Walton, Anna Turner
  *
  */
-
 public class ChatServer {
     // declare and initialise the text display area
 
@@ -33,33 +38,31 @@ public class ChatServer {
     private String name;
     private ServerListenerTask listener;
 
-    public ChatServer(String n, Stage s) {
+
+
+    public ChatServer(String n, Stage s, KeyPair kp) {
         name = n;
         stage = s;
-        textWindow.appendText("Listening for connection" + "\n");
-
         GUI();
+        Crypto.setLocalKEys(kp);
+
+
+		
+		textWindow.appendText("Listening for connection" + "\n");
         try
         {
             // create a server socket
             listenSocket = new ServerSocket(port);
 
-
             // create a thread to listen for messages
-            listener = new ServerListenerTask(textWindow, listenSocket);
-
-
+            listener = new ServerListenerTask(textWindow, listenSocket, kp);
             Thread thread = new Thread(listener);
-
             thread.start(); // start the thread
-
-
         }
         catch (IOException e)
         {
             textWindow.setText("An error has occurred");
         }
-
     }
 
     public void GUI()
@@ -82,16 +85,15 @@ public class ChatServer {
                             {
                             	outStream = connection.getOutputStream();
                                 outDataStream = new DataOutputStream (outStream);
-                                outDataStream.writeUTF(text); // transmit the text
+                                outDataStream.writeUTF(Crypto.encrypt(text)); // transmit the text
+                                System.out.println(Crypto.encrypt(text));
                             }
-                            catch(IOException ie)
+                            catch(Exception ie)
                             {
                             }  
                 		}else{
-                			textWindow.appendText("\n");
-                    		textWindow.appendText("Waiting for connection");
+                    		textWindow.appendText("Waiting for connection" + "\n");
                     	}
-                        
                     }
                 });
 

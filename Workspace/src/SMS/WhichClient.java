@@ -1,6 +1,8 @@
 package SMS;
 
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.security.KeyPair;
 import java.util.Optional;
 import javafx.application.Application;
 import javafx.scene.control.TextInputDialog;
@@ -14,23 +16,21 @@ public class WhichClient {
 
     Stage stage;
 
-    public WhichClient(Stage s) {
+    public WhichClient(Stage s, KeyPair kp) {
         stage = s;
         Socket connection; // declare a "general" socket
-
         try
         {
             // create a connection to the server
-            connection = new Socket (getIP(), getPort());
+            connection = new Socket ();
+            connection.connect(new InetSocketAddress(getIP(),getPort()),2000);
             System.out.println("Connection Established");
-            new ChatClient(stage,connection,getName());
-
+            new ChatClient(stage,connection,getName(),kp);
         }
         catch(Exception e)
         {
             System.out.println("Starting Server");
-            new ChatServer(getName(), stage);
-
+            new ChatServer(getName(), stage, kp);
         }
     }
 

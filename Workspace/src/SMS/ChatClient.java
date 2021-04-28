@@ -31,12 +31,14 @@ public class ChatClient {
     private String name; //User's name
     private Stage stage;
     private KeyPair keyPair;
-    private PublicKey pubKey;
+    private static PublicKey pubKey;
 
-    public ChatClient(Stage s, Socket c, String n) {
+    public ChatClient(Stage s, Socket c, String n, KeyPair kp) {
         connection = c;
         name = n;
         stage = s;
+        keyPair = kp;
+        Crypto.setLocalKEys(kp);
         gui();
         try
         {
@@ -74,8 +76,8 @@ public class ChatClient {
 
                         try
                         {
-                            //Encrypt Here1
-                        	
+                            //Encrypt Here
+                        	text = Crypto.encrypt(text);
                         	outDataStream.writeUTF(text); // transmit the text
                         }
                         catch(IOException ie)
@@ -102,7 +104,6 @@ public class ChatClient {
 
     private void exchangeKeys(){
 
-        System.out.println("1");
         try {
             System.out.println(DatatypeConverter.printHexBinary(keyPair.getPublic().getEncoded()));
             outStream.write(keyPair.getPublic().getEncoded());
@@ -111,7 +112,6 @@ public class ChatClient {
             System.out.println("I/O Error");
             System.exit(0);
         }
-        
         try
         {
           	byte[] servPubKeyBytes = new byte[588];
@@ -121,6 +121,7 @@ public class ChatClient {
             X509EncodedKeySpec ks = new X509EncodedKeySpec(servPubKeyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             pubKey = kf.generatePublic(ks);
+            Crypto.setForeignKey(pubKey);
             System.out.println(DatatypeConverter.printHexBinary(pubKey.getEncoded()));
         } catch (IOException e) {
             System.out.println("Error obtaining server public key 1.");
@@ -133,6 +134,7 @@ public class ChatClient {
             System.exit(0);
         }   
     }
+
 }
 
 
