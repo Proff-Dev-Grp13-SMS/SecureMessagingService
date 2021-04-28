@@ -86,6 +86,7 @@ public class ChatServer {
                             	outStream = connection.getOutputStream();
                                 outDataStream = new DataOutputStream (outStream);
                                 outDataStream.writeUTF(Crypto.encrypt(text)); // transmit the text
+                                System.out.println(Crypto.encrypt(text));
                             }
                             catch(Exception ie)
                             {
@@ -107,12 +108,5 @@ public class ChatServer {
         stage.setTitle(name);
         stage.show();
     }
-    
-    /**
-     * Gets the public key received from User2, to be used in the listener class
-     * @return PublicKey pubKey: The public key received from the user
-     */
-    public static PublicKey getKey() {
-    	return pubKey;
-    }
+
 }
